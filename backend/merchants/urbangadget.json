@@ -1,0 +1,67 @@
+{
+  "merchant": {
+    "id": "urbangadget",
+    "name": "UrbanGadget",
+    "category": "Consumer Electronics",
+    "policy": {
+      "currency": "INR",
+      "critical_rules": [
+        {
+          "id": "discount_limit",
+          "label": "Max Auto-Discount",
+          "type": "max_auto_discount_pct",
+          "limit": 8,
+          "description": "Discounts above 8% require manual merchant approval before execution."
+        },
+        {
+          "id": "return_rate_limit",
+          "label": "High Return-Rate Product Guard",
+          "type": "max_product_return_rate_pct",
+          "limit": 15,
+          "description": "Do not auto-promote electronics with a return rate above 15%."
+        },
+        {
+          "id": "chargeback_risk_limit",
+          "label": "Chargeback Risk Guard",
+          "type": "max_flagged_customer_pct",
+          "limit": 15,
+          "description": "If more than 15% of customers driving an opportunity have a chargeback history, block and flag for fraud review."
+        }
+      ]
+    }
+  },
+  "products": [
+    {"id": "E001", "name": "SoundWave Bluetooth Earbuds", "price": 2499, "stock": 60, "category": "Audio", "return_rate_pct": 5.0},
+    {"id": "E002", "name": "SoundWave Charging Case", "price": 799, "stock": 100, "category": "Audio", "return_rate_pct": 2.0},
+    {"id": "E003", "name": "PowerCore 20000mAh Power Bank", "price": 1799, "stock": 45, "category": "Power"},
+    {"id": "E004", "name": "FastCharge 65W Adapter", "price": 999, "stock": 70, "category": "Power", "return_rate_pct": 3.0},
+    {"id": "E005", "name": "ClearView Phone Screen Protector", "price": 299, "stock": 200, "category": "Accessories", "return_rate_pct": 1.0},
+    {"id": "E006", "name": "GripCase Phone Cover", "price": 599, "stock": 90, "category": "Accessories", "return_rate_pct": 4.0},
+    {"id": "E007", "name": "SmartBand Fitness Tracker", "price": 3499, "stock": 20, "category": "Wearables", "return_rate_pct": 19.0}
+  ],
+  "customers": [
+    {"id": "U001", "name": "Farhan Ali", "chargeback_flag": false},
+    {"id": "U002", "name": "Meera Pillai", "chargeback_flag": false},
+    {"id": "U003", "name": "Aditya Kulkarni", "chargeback_flag": false},
+    {"id": "U004", "name": "Ritika Bose", "chargeback_flag": false},
+    {"id": "U005", "name": "Sameer Khan", "chargeback_flag": true},
+    {"id": "U006", "name": "Neha Joshi", "chargeback_flag": false}
+  ],
+  "orders": [
+    {"id": "OU001", "customer_id": "U001", "date": "2026-08-01", "items": ["E001"]},
+    {"id": "OU002", "customer_id": "U002", "date": "2026-08-02", "items": ["E001", "E002"]},
+    {"id": "OU003", "customer_id": "U003", "date": "2026-08-03", "items": ["E001"]},
+    {"id": "OU004", "customer_id": "U004", "date": "2026-08-04", "items": ["E001", "E002"]},
+    {"id": "OU005", "customer_id": "U005", "date": "2026-08-05", "items": ["E001", "E002"]},
+    {"id": "OU006", "customer_id": "U006", "date": "2026-08-06", "items": ["E001"]},
+    {"id": "OU007", "customer_id": "U001", "date": "2026-08-07", "items": ["E003", "E004"]},
+    {"id": "OU008", "customer_id": "U002", "date": "2026-08-08", "items": ["E001", "E002"]},
+    {"id": "OU009", "customer_id": "U003", "date": "2026-08-09", "items": ["E005"]},
+    {"id": "OU010", "customer_id": "U004", "date": "2026-08-10", "items": ["E001"]},
+    {"id": "OU011", "customer_id": "U005", "date": "2026-08-11", "items": ["E007"]},
+    {"id": "OU012", "customer_id": "U006", "date": "2026-08-12", "items": ["E001", "E002"]},
+    {"id": "OU013", "customer_id": "U001", "date": "2026-08-13", "items": ["E006"]},
+    {"id": "OU014", "customer_id": "U002", "date": "2026-08-14", "items": ["E001"]},
+    {"id": "OU015", "customer_id": "U003", "date": "2026-08-15", "items": ["E001", "E002"]}
+  ]
+}

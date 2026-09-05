@@ -1,0 +1,87 @@
+{
+  "merchant": {
+    "id": "stridesport",
+    "name": "StrideSport",
+    "category": "Sportswear & Footwear",
+    "policy": {
+      "currency": "INR",
+      "critical_rules": [
+        {
+          "id": "discount_limit",
+          "label": "Max Auto-Discount",
+          "type": "max_auto_discount_pct",
+          "limit": 10,
+          "description": "Discounts above 10% require manual merchant approval before execution."
+        },
+        {
+          "id": "return_rate_limit",
+          "label": "High Return-Rate Product Guard",
+          "type": "max_product_return_rate_pct",
+          "limit": 12,
+          "description": "Do not auto-promote products with a return rate above 12% - promoting a high-return product increases refund losses even if it lifts short-term revenue."
+        },
+        {
+          "id": "chargeback_risk_limit",
+          "label": "Chargeback Risk Guard",
+          "type": "max_flagged_customer_pct",
+          "limit": 20,
+          "description": "If more than 20% of the customers driving a detected opportunity have a chargeback history, block the campaign and flag for fraud review instead of auto-approving."
+        }
+      ]
+    }
+  },
+  "products": [
+    {"id": "P001", "name": "Air Runner Pro Shoes", "price": 4999, "stock": 42, "category": "Footwear", "return_rate_pct": 4.5},
+    {"id": "P002", "name": "CoolFit Running Socks (Pack of 3)", "price": 499, "stock": 120, "category": "Accessories", "return_rate_pct": 2.0},
+    {"id": "P003", "name": "FlexTrack Sports Shorts", "price": 1299, "stock": 60, "category": "Apparel", "return_rate_pct": 6.0},
+    {"id": "P004", "name": "HydroFlow Water Bottle 1L", "price": 699, "stock": 80, "category": "Accessories", "return_rate_pct": 1.5},
+    {"id": "P005", "name": "TrailBlaze Hiking Boots", "price": 6499, "stock": 15, "category": "Footwear", "return_rate_pct": 18.0},
+    {"id": "P006", "name": "CompressFit Ankle Sleeve", "price": 349, "stock": 90, "category": "Accessories", "return_rate_pct": 3.0},
+    {"id": "P007", "name": "ProDry Sports T-Shirt", "price": 899, "stock": 70, "category": "Apparel", "return_rate_pct": 5.5},
+    {"id": "P008", "name": "UltraLight Yoga Mat", "price": 1599, "stock": 8, "category": "Fitness", "return_rate_pct": 4.0},
+    {"id": "P009", "name": "PowerGrip Gym Gloves", "price": 599, "stock": 55, "category": "Accessories", "return_rate_pct": 2.5},
+    {"id": "P010", "name": "StrideSport Duffel Bag", "price": 1899, "stock": 30, "category": "Accessories", "return_rate_pct": 3.5}
+  ],
+  "customers": [
+    {"id": "C001", "name": "Ananya Rao", "chargeback_flag": false},
+    {"id": "C002", "name": "Rohit Mehta", "chargeback_flag": false},
+    {"id": "C003", "name": "Priya Nair", "chargeback_flag": false},
+    {"id": "C004", "name": "Karan Singh", "chargeback_flag": true},
+    {"id": "C005", "name": "Sneha Iyer", "chargeback_flag": false},
+    {"id": "C006", "name": "Arjun Verma", "chargeback_flag": false},
+    {"id": "C007", "name": "Divya Kapoor", "chargeback_flag": false},
+    {"id": "C008", "name": "Vikram Shah", "chargeback_flag": false}
+  ],
+  "orders": [
+    {"id": "O001", "customer_id": "C001", "date": "2026-08-01", "items": ["P001"]},
+    {"id": "O002", "customer_id": "C002", "date": "2026-08-01", "items": ["P001", "P002"]},
+    {"id": "O003", "customer_id": "C003", "date": "2026-08-02", "items": ["P001"]},
+    {"id": "O004", "customer_id": "C004", "date": "2026-08-02", "items": ["P001", "P002"]},
+    {"id": "O005", "customer_id": "C005", "date": "2026-08-03", "items": ["P003", "P007"]},
+    {"id": "O006", "customer_id": "C001", "date": "2026-08-04", "items": ["P001", "P002"]},
+    {"id": "O007", "customer_id": "C006", "date": "2026-08-05", "items": ["P001"]},
+    {"id": "O008", "customer_id": "C007", "date": "2026-08-05", "items": ["P004"]},
+    {"id": "O009", "customer_id": "C008", "date": "2026-08-06", "items": ["P001", "P002"]},
+    {"id": "O010", "customer_id": "C002", "date": "2026-08-07", "items": ["P005"]},
+    {"id": "O011", "customer_id": "C003", "date": "2026-08-08", "items": ["P001"]},
+    {"id": "O012", "customer_id": "C004", "date": "2026-08-08", "items": ["P007", "P003"]},
+    {"id": "O013", "customer_id": "C005", "date": "2026-08-09", "items": ["P001", "P002"]},
+    {"id": "O014", "customer_id": "C001", "date": "2026-08-10", "items": ["P009"]},
+    {"id": "O015", "customer_id": "C006", "date": "2026-08-11", "items": ["P001"]},
+    {"id": "O016", "customer_id": "C007", "date": "2026-08-12", "items": ["P001", "P002"]},
+    {"id": "O017", "customer_id": "C008", "date": "2026-08-13", "items": ["P001"]},
+    {"id": "O018", "customer_id": "C002", "date": "2026-08-14", "items": ["P001", "P002"]},
+    {"id": "O019", "customer_id": "C003", "date": "2026-08-15", "items": ["P006"]},
+    {"id": "O020", "customer_id": "C004", "date": "2026-08-16", "items": ["P001"]},
+    {"id": "O021", "customer_id": "C005", "date": "2026-08-17", "items": ["P001", "P002"]},
+    {"id": "O022", "customer_id": "C001", "date": "2026-08-18", "items": ["P008"]},
+    {"id": "O023", "customer_id": "C006", "date": "2026-08-19", "items": ["P001"]},
+    {"id": "O024", "customer_id": "C007", "date": "2026-08-20", "items": ["P001", "P002"]},
+    {"id": "O025", "customer_id": "C008", "date": "2026-08-21", "items": ["P010"]},
+    {"id": "O026", "customer_id": "C002", "date": "2026-08-22", "items": ["P001"]},
+    {"id": "O027", "customer_id": "C003", "date": "2026-08-23", "items": ["P001", "P002"]},
+    {"id": "O028", "customer_id": "C004", "date": "2026-08-24", "items": ["P001"]},
+    {"id": "O029", "customer_id": "C005", "date": "2026-08-25", "items": ["P003"]},
+    {"id": "O030", "customer_id": "C001", "date": "2026-08-26", "items": ["P001", "P002"]}
+  ]
+}

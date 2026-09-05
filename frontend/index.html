@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Merchant Revenue Growth Agent</title>
+<style>
+  :root {
+    --bg: #0E1116; --panel: #161B22; --panel-border: #262C36;
+    --text: #E6E8EB; --text-dim: #8B94A3;
+    --accent: #4F8CFF; --good: #3DD68C; --warn: #F5B942; --bad: #F2545B;
+    --mono: 'SF Mono', 'Consolas', monospace;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.5; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 32px 20px 80px; }
+  header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--panel-border); padding-bottom: 20px; margin-bottom: 28px; flex-wrap: wrap; gap: 12px; }
+  h1 { font-size: 20px; margin: 0; font-weight: 600; }
+  .merchant-tag { color: var(--text-dim); font-size: 13px; }
+  select {
+    background: var(--panel); color: var(--text); border: 1px solid var(--panel-border);
+    border-radius: 8px; padding: 8px 12px; font-size: 13px; font-weight: 600;
+  }
+  .stats { display: flex; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }
+  .stat { background: var(--panel); border: 1px solid var(--panel-border); border-radius: 10px; padding: 16px 20px; flex: 1; min-width: 130px; }
+  .stat .num { font-size: 24px; font-weight: 700; }
+  .stat .label { font-size: 12px; color: var(--text-dim); margin-top: 4px; }
+  section { margin-bottom: 32px; }
+  h2 { font-size: 15px; color: var(--text-dim); font-weight: 600; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+  .card { background: var(--panel); border: 1px solid var(--panel-border); border-radius: 12px; padding: 20px; margin-bottom: 14px; }
+  .opp-title { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+  .opp-meta { color: var(--text-dim); font-size: 13px; margin-bottom: 12px; }
+  button { background: var(--accent); color: #fff; border: none; border-radius: 8px; padding: 9px 16px; font-size: 13px; font-weight: 600; cursor: pointer; }
+  button:hover { background: #3D77E0; }
+  button.secondary { background: transparent; border: 1px solid var(--panel-border); color: var(--text); }
+  button.danger { background: var(--bad); }
+  .decision-box { margin-top: 14px; border-top: 1px solid var(--panel-border); padding-top: 14px; }
+  .badge { display: inline-block; font-size: 11px; padding: 3px 9px; border-radius: 100px; font-weight: 600; margin-left: 8px; }
+  .badge.ok { background: rgba(61,214,140,0.15); color: var(--good); }
+  .badge.warn { background: rgba(245,185,66,0.15); color: var(--warn); }
+  .badge.bad { background: rgba(242,84,91,0.15); color: var(--bad); }
+  .reason { font-size: 13px; color: var(--text-dim); margin: 10px 0; line-height: 1.6; }
+  .actions { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+  .rule-row { display: flex; align-items: flex-start; gap: 8px; font-size: 12.5px; padding: 8px 0; border-bottom: 1px solid var(--panel-border); }
+  .rule-row:last-child { border-bottom: none; }
+  .rule-icon { font-size: 14px; line-height: 1.4; }
+  .rule-label { font-weight: 600; }
+  .rule-detail { color: var(--text-dim); }
+  .log-entry { font-family: var(--mono); font-size: 12px; padding: 10px 14px; border-left: 3px solid var(--panel-border); margin-bottom: 6px; background: var(--panel); color: var(--text-dim); }
+  .log-entry.executed { border-color: var(--good); }
+  .log-entry.blocked { border-color: var(--warn); }
+  .log-entry.failed { border-color: var(--bad); }
+  .log-entry .tstamp { color: #55606E; margin-right: 8px; }
+  .empty { color: var(--text-dim); font-size: 13px; font-style: italic; }
+  .summary-box { background: var(--panel); border: 1px solid var(--accent); border-radius: 12px; padding: 20px; font-size: 14px; line-height: 1.7; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1 id="merchantName">Revenue Growth Agent</h1>
+      <div class="merchant-tag" id="merchantTag">loading…</div>
+    </div>
+    <div style="display:flex; gap:10px; align-items:center;">
+      <select id="merchantSelect" onchange="switchMerchant()"></select>
+      <span class="merchant-tag">Razorpay Test Mode</span>
+    </div>
+  </header>
+
+  <div class="stats" id="stats"></div>
+
+  <section>
+    <h2>Detected Revenue Opportunities</h2>
+    <div id="opportunities"><div class="empty">Analyzing sales data…</div></div>
+  </section>
+
+  <section>
+    <h2>
+      Nightly Summary
+      <button class="secondary" onclick="loadSummary()">Refresh</button>
+    </h2>
+    <div id="summary" class="summary-box">Loading tonight's summary…</div>
+  </section>
+
+  <section>
+    <h2>Audit Log</h2>
+    <div id="auditLog"><div class="empty">No actions taken yet.</div></div>
+  </section>
+</div>
+
+<script>
+const API = "";
+let currentMerchant = "stridesport";
+
+async function loadMerchantList() {
+  const res = await fetch(`${API}/api/merchants`);
+  const data = await res.json();
+  const select = document.getElementById("merchantSelect");
+  select.innerHTML = data.merchants.map(m => `<option value="${m.id}">${m.name}</option>`).join("");
+  select.value = currentMerchant;
+}
+
+function switchMerchant() {
+  currentMerchant = document.getElementById("merchantSelect").value;
+  loadAll();
+}
+
+async function loadDashboard() {
+  const res = await fetch(`${API}/api/dashboard?merchant_id=${currentMerchant}`);
+  const data = await res.json();
+  document.getElementById("merchantName").textContent = data.merchant.name;
+  document.getElementById("merchantTag").textContent = `${data.merchant.category} · ${data.merchant.policy.critical_rules.length} critical rules active`;
+  document.getElementById("stats").innerHTML = `
+    <div class="stat"><div class="num">${data.total_orders}</div><div class="label">Total Orders</div></div>
+    <div class="stat"><div class="num">₹${data.total_revenue_estimate.toLocaleString('en-IN')}</div><div class="label">Revenue (est.)</div></div>
+    <div class="stat"><div class="num">${data.products.length}</div><div class="label">Products</div></div>
+    <div class="stat"><div class="num">${data.underperforming_products.length}</div><div class="label">Underperforming SKUs</div></div>
+  `;
+}
+
+async function loadOpportunities() {
+  const res = await fetch(`${API}/api/opportunities?merchant_id=${currentMerchant}`);
+  const data = await res.json();
+  const container = document.getElementById("opportunities");
+  if (!data.opportunities.length) {
+    container.innerHTML = '<div class="empty">No strong cross-sell signals found yet.</div>';
+    return;
+  }
+  container.innerHTML = "";
+  data.opportunities.forEach((opp, idx) => {
+    const div = document.createElement("div");
+    div.className = "card";
+    div.id = `opp-${idx}`;
+    div.innerHTML = `
+      <div class="opp-title">${opp.product_a_name} → ${opp.product_b_name}</div>
+      <div class="opp-meta">${opp.support_pct}% co-purchase rate · ${opp.co_occurrences} of ${opp.product_a_total_orders} orders</div>
+      <button onclick="runDecision('${opp.product_a}', '${opp.product_b}', ${idx})">Ask Agent to Decide</button>
+      <div class="decision-box" id="decision-${idx}"></div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+async function runDecision(productA, productB, idx) {
+  const res = await fetch(`${API}/api/decide`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ merchant_id: currentMerchant, product_a: productA, product_b: productB, discount_pct: 15 }),
+  });
+  const decision = await res.json();
+  renderDecision(decision, idx);
+}
+
+function renderDecision(decision, idx) {
+  const box = document.getElementById(`decision-${idx}`);
+  const badge = decision.needs_approval
+    ? `<span class="badge warn">Needs Approval</span>`
+    : `<span class="badge ok">Auto-Approved</span>`;
+
+  const rulesHtml = decision.rule_results.map(r => `
+    <div class="rule-row">
+      <span class="rule-icon">${r.passed ? '✅' : '🛑'}</span>
+      <div><span class="rule-label">${r.label}:</span> <span class="rule-detail">${r.detail}</span></div>
+    </div>
+  `).join("");
+
+  box.innerHTML = `
+    <div><strong>Bundle:</strong> ${decision.product_a.name} + ${decision.product_b.name} ${badge}</div>
+    <div class="reason">${decision.reason}</div>
+    <div class="opp-meta">
+      Full price ₹${decision.bundle_price_full} → Bundle price ₹${decision.bundle_price_discounted}
+      (${decision.discount_pct}% off, saves ₹${decision.discount_amount})
+    </div>
+    <div style="margin: 12px 0;">${rulesHtml}</div>
+    <div class="actions" id="actions-${idx}"></div>
+  `;
+
+  const actions = document.getElementById(`actions-${idx}`);
+  if (decision.needs_approval) {
+    actions.innerHTML = `
+      <button onclick="approveAndExecute('${decision.decision_id}', ${idx})">Approve & Execute</button>
+      <button class="secondary" onclick="executeDecision('${decision.decision_id}', ${idx}, false)">Try Without Approval (see block)</button>
+      <button class="danger" onclick="executeDecision('${decision.decision_id}', ${idx}, true)">Simulate Payment Failure</button>
+    `;
+  } else {
+    actions.innerHTML = `
+      <button onclick="executeDecision('${decision.decision_id}', ${idx}, false)">Execute via Razorpay (Test Mode)</button>
+      <button class="danger" onclick="executeDecision('${decision.decision_id}', ${idx}, true)">Simulate Payment Failure</button>
+    `;
+  }
+}
+
+async function approveAndExecute(decisionId, idx) {
+  await fetch(`${API}/api/approve/${decisionId}`, { method: "POST" });
+  await executeDecision(decisionId, idx, false);
+}
+
+async function executeDecision(decisionId, idx, forceFail) {
+  const res = await fetch(`${API}/api/execute/${decisionId}?force_fail=${forceFail}`, { method: "POST" });
+  const result = await res.json();
+  const actions = document.getElementById(`actions-${idx}`);
+  let msg = "";
+  if (result.status === "executed") {
+    msg = `<span class="badge ok">Executed</span> Razorpay order <code>${result.razorpay_order.id}</code> created for ₹${(result.razorpay_order.amount/100).toFixed(0)}`;
+  } else if (result.status === "blocked") {
+    msg = `<span class="badge warn">Blocked</span> ${result.message}`;
+  } else if (result.status === "failed") {
+    msg = `<span class="badge bad">Failed</span> ${result.message}`;
+  }
+  actions.insertAdjacentHTML("beforeend", `<div class="reason">${msg}</div>`);
+  loadAuditLog();
+  loadSummary();
+}
+
+async function loadAuditLog() {
+  const res = await fetch(`${API}/api/audit-log?merchant_id=${currentMerchant}`);
+  const data = await res.json();
+  const container = document.getElementById("auditLog");
+  if (!data.log.length) {
+    container.innerHTML = '<div class="empty">No actions taken yet.</div>';
+    return;
+  }
+  container.innerHTML = data.log.slice().reverse().map(entry => {
+    let cls = "";
+    if (entry.event === "action_executed") cls = "executed";
+    if (entry.event === "action_blocked") cls = "blocked";
+    if (entry.event === "payment_failed") cls = "failed";
+    const time = entry.timestamp.split("T")[1].split(".")[0];
+    return `<div class="log-entry ${cls}"><span class="tstamp">${time}</span>${entry.event}</div>`;
+  }).join("");
+}
+
+async function loadSummary() {
+  const res = await fetch(`${API}/api/nightly-summary?merchant_id=${currentMerchant}`);
+  const data = await res.json();
+  document.getElementById("summary").textContent = data.summary_text;
+}
+
+function loadAll() {
+  loadDashboard();
+  loadOpportunities();
+  loadAuditLog();
+  loadSummary();
+}
+
+loadMerchantList().then(loadAll);
+</script>
+</body>
+</html>

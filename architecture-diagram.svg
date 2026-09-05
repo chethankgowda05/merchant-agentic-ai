@@ -1,0 +1,59 @@
+<svg width="680" height="760" viewBox="0 0 680 760" xmlns="http://www.w3.org/2000/svg">
+<rect width="680" height="760" fill="#0E1116"/>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#8B94A3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+</defs>
+
+<rect x="170" y="40" width="340" height="56" rx="8" fill="#2C2C2A" stroke="#5F5E5A" stroke-width="0.5"/>
+<text x="340" y="60" text-anchor="middle" fill="#F1EFE8" font-family="sans-serif" font-size="14" font-weight="500">Merchant data</text>
+<text x="340" y="78" text-anchor="middle" fill="#D3D1C7" font-family="sans-serif" font-size="12">Orders, products, customers</text>
+<line x1="340" y1="96" x2="340" y2="126" stroke="#8B94A3" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<rect x="170" y="126" width="340" height="56" rx="8" fill="#04342C" stroke="#0F6E56" stroke-width="0.5"/>
+<text x="340" y="146" text-anchor="middle" fill="#9FE1CB" font-family="sans-serif" font-size="14" font-weight="500">Analyze</text>
+<text x="340" y="164" text-anchor="middle" fill="#5DCAA5" font-family="sans-serif" font-size="12">Detect cross-sell opportunities</text>
+<line x1="340" y1="182" x2="340" y2="212" stroke="#8B94A3" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<rect x="170" y="212" width="340" height="56" rx="8" fill="#26215C" stroke="#534AB7" stroke-width="0.5"/>
+<text x="340" y="232" text-anchor="middle" fill="#CECBF6" font-family="sans-serif" font-size="14" font-weight="500">Decide</text>
+<text x="340" y="250" text-anchor="middle" fill="#AFA9EC" font-family="sans-serif" font-size="12">AI proposes bundle and discount</text>
+<line x1="340" y1="268" x2="340" y2="298" stroke="#8B94A3" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<rect x="170" y="298" width="340" height="56" rx="8" fill="#4A1B0C" stroke="#993C1D" stroke-width="0.5"/>
+<text x="340" y="318" text-anchor="middle" fill="#F5C4B3" font-family="sans-serif" font-size="14" font-weight="500">Critical rules gate</text>
+<text x="340" y="336" text-anchor="middle" fill="#F0997B" font-family="sans-serif" font-size="12">Discount, return-rate, chargeback</text>
+
+<path d="M340 354 L340 372 L225 372 L225 400" fill="none" stroke="#8B94A3" stroke-width="1.5" marker-end="url(#arrow)"/>
+<path d="M340 354 L340 372 L495 372 L495 400" fill="none" stroke="#8B94A3" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<rect x="110" y="400" width="230" height="56" rx="8" fill="#412402" stroke="#854F0B" stroke-width="0.5"/>
+<text x="225" y="420" text-anchor="middle" fill="#FAC775" font-family="sans-serif" font-size="14" font-weight="500">Blocked</text>
+<text x="225" y="438" text-anchor="middle" fill="#EF9F27" font-family="sans-serif" font-size="12">Needs merchant approval</text>
+
+<rect x="380" y="400" width="230" height="56" rx="8" fill="#173404" stroke="#3B6D11" stroke-width="0.5"/>
+<text x="495" y="420" text-anchor="middle" fill="#C0DD97" font-family="sans-serif" font-size="14" font-weight="500">Approved</text>
+<text x="495" y="438" text-anchor="middle" fill="#97C459" font-family="sans-serif" font-size="12">Passes all critical rules</text>
+
+<path d="M225 456 L225 472 L340 472 L340 486" fill="none" stroke="#8B94A3" stroke-width="1.5" marker-end="url(#arrow)"/>
+<path d="M495 456 L495 472 L340 472 L340 486" fill="none" stroke="#8B94A3" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="230" y="468" text-anchor="middle" fill="#8B94A3" font-family="sans-serif" font-size="12">after approval</text>
+<text x="450" y="468" text-anchor="middle" fill="#8B94A3" font-family="sans-serif" font-size="12">auto</text>
+
+<rect x="170" y="486" width="340" height="56" rx="8" fill="#042C53" stroke="#185FA5" stroke-width="0.5"/>
+<text x="340" y="506" text-anchor="middle" fill="#B5D4F4" font-family="sans-serif" font-size="14" font-weight="500">Execute</text>
+<text x="340" y="524" text-anchor="middle" fill="#85B7EB" font-family="sans-serif" font-size="12">Razorpay test-mode order created</text>
+<line x1="340" y1="542" x2="340" y2="572" stroke="#8B94A3" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<rect x="170" y="572" width="340" height="56" rx="8" fill="#2C2C2A" stroke="#5F5E5A" stroke-width="0.5"/>
+<text x="340" y="592" text-anchor="middle" fill="#F1EFE8" font-family="sans-serif" font-size="14" font-weight="500">Audit log</text>
+<text x="340" y="610" text-anchor="middle" fill="#D3D1C7" font-family="sans-serif" font-size="12">Every step timestamped</text>
+<line x1="340" y1="628" x2="340" y2="658" stroke="#8B94A3" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<rect x="170" y="658" width="340" height="56" rx="8" fill="#26215C" stroke="#534AB7" stroke-width="0.5"/>
+<text x="340" y="678" text-anchor="middle" fill="#CECBF6" font-family="sans-serif" font-size="14" font-weight="500">Nightly summary</text>
+<text x="340" y="696" text-anchor="middle" fill="#AFA9EC" font-family="sans-serif" font-size="12">Report and next-action prediction</text>
+
+<path d="M170 686 L60 686 L60 154 L168 154" fill="none" stroke="#8B94A3" stroke-width="1.5" stroke-dasharray="4 4" marker-end="url(#arrow)"/>
+<text x="60" y="420" text-anchor="middle" fill="#8B94A3" font-family="sans-serif" font-size="12" transform="rotate(-90 60 420)">next day</text>
+
+</svg>
